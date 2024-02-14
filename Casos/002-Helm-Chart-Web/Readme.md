@@ -20,6 +20,7 @@ Una vez desplegada la primera aplicación, desplegar 2 más con el mismo Chart s
 
 ## TIPS
 helm create
+
 -f
 	
 
