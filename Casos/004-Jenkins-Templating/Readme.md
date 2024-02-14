@@ -13,6 +13,6 @@ Los pipelines serán sencillos, tienen que tener tres stages con sus respectivos
 Ya que habrá un sistema de Gobernanza para los pipelines, lo ideal sería que la lógica de los stages estuvieran en unas librerías que se pudieran compartir, por si en un futuro se pueden reutilizar en otros pipelines. Además, de esta forma, podemos cambiar la lógica para los 400 microservicios y 50 frontends que se van a desplegar, si tener que modificar 450 Jenkinsfile.
 
 ## Tips
-JTE
-pipeline_config.groovy
-Shared Libraries
+  - JTE
+  - pipeline_config.groovy
+  - Shared Libraries
