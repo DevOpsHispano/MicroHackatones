@@ -1,4 +1,4 @@
-#006: Argo CD
+# 006: Argo CD
 De cara a mejorar el cluster de Kubernetes de la compañía, en el que ya se han ido desplegando aplicaciones y configurando la monitorización, 
 el CTO decide que el siguiente paso será apostar por el framework GitOps. 
 
@@ -20,3 +20,5 @@ Probar a realizar desde Argo CD despliegues complejos del tipo: Canary deploymen
  - GitOps framework
  - Argo CD Installation
  
+# Mejores Soluciones
+TODO: Enlaces a las mejores soluciones
