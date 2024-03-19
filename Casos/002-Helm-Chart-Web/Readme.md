@@ -1,6 +1,8 @@
 # 002 Helm Chart Web
-
 Vas a crear un Helm Chart para desplegar una aplicación web llamada "WebAppX" (donde X será un número a elegir por vosotros). La aplicación es simple y consta de un servidor web que sirve una página HTML básica que podéis encontrar en esta imagen (usadla!): https://github.com/cloudogu/hello-k8s
+
+## Objetivo
+Crear un Helm Chart para desplegar una aplicación web llamada "WebAppX" (donde X será un número a elegir por vosotros)
 
 ## Requisitos de la Aplicación
 	1. Servidor Web:
@@ -18,9 +20,8 @@ Vas a crear un Helm Chart para desplegar una aplicación web llamada "WebAppX" (
 
 Una vez desplegada la primera aplicación, desplegar 2 más con el mismo Chart solo cambiando el nombre, el mensaje y el puerto de la aplicación.
 
-## TIPS
-helm create
+## Tips
+	- helm create
 
--f
-	
-
+## Mejores Soluciones
+TODO: Enlaces a las mejores soluciones
