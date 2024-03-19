@@ -6,19 +6,19 @@ De esta manera, los cambios que se realice en el cluster estarán almacenados en
 
 Para poder implementar este framework se apuesta por el uso de la herramienta Argo CD.
 
-# Objetivos:
- - Instalar Argo CD.
- - Almacenar la aplicación de prueba https://github.com/cloudogu/hello-k8s en un repo git personal.
- - Utilizando Argo CD desplegar la aplicación desde este git.
- - Configurar el despliegue automático de la aplicación ante cualquier cambio realizado en el repositorio Git.
- - Una vez configurado, realizar un cambio a la aplicación, ver que se despliega correctamente y realizar un roll-back a la versión previa al cambio desde Argo CD.
+## Objetivo:
+    - Instalar Argo CD.
+    - Almacenar la aplicación de prueba https://github.com/cloudogu/hello-k8s en un repo git personal.
+    - Utilizando Argo CD desplegar la aplicación desde este git.
+    - Configurar el despliegue automático de la aplicación ante cualquier cambio realizado en el repositorio Git.
+    - Una vez configurado, realizar un cambio a la aplicación, ver que se despliega correctamente y realizar un roll-back a la versión previa al cambio desde Argo CD.
 
-# Bonus Track:
+## Bonus Track:
 Probar a realizar desde Argo CD despliegues complejos del tipo: Canary deployment o Blue-Green deployment.
 
-# Tips:
- - GitOps framework
- - Argo CD Installation
+## Tips:
+    - GitOps framework
+    - Argo CD Installation
  
-# Mejores Soluciones
+## Mejores Soluciones
 TODO: Enlaces a las mejores soluciones
