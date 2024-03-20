@@ -13,6 +13,8 @@ Además, se podrán publicar los resultados de diferentes usuarios mediante un P
         - Haz clic en el botón "Fork" en la esquina superior derecha.
         - Se creará un fork del repositorio en tu cuenta de GitHub.
 
+    #### NOTA: Si ya tienes el fork creado, recuerda sincronizarlo antes de continuar.
+
     2. Creación del caso:
         - Accede a tu fork del repositorio en GitHub.
         - Navega a la carpeta correspondiente al taller que deseas realizar (consulta el archivo Readme.md en la carpeta soluciones para obtener más información).
