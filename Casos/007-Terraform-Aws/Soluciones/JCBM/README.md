@@ -77,8 +77,34 @@ Lanzando el script `create_backend_bucket.sh`
 
 Ejecutar el comando `terraform init` en el directorio del proyecto para inicializar el proyecto.
 
-## Paso 8: Plan y Apply
+## Paso 8: Crear workspace para cada environment
 
-Ejecutar el comando `terraform plan` para generar un plan de despliegue. 
+Ejecutar el comando `terraform workspace new <ENV>`
 
-Si todo va bien, ejecutar el comando `terraform apply` para aplicar el plan de despliegue.
+```
+terraform workspace new qa
+terraform workspace new prod
+```
+
+## Paso 9: Plan y Apply en el workspace correspondiente
+
+Primero me aseguro que estoy en el workspace adecuado
+
+`terraform workspace select <ENV>`
+
+y ejecuto el comando `terraform plan -var-file="tfvars/<ENV>.tfvars"` para generar un plan de despliegue. 
+
+Si todo va bien, ejecutar el comando `terraform apply -var-file="tfvars/<ENV>.tfvars"` para aplicar el plan de despliegue.
+
+## Paso 10: Destroy
+
+Para destruir todos los recursos creados por terraform en un workspace, 
+
+
+`terraform workspace select <ENV>`
+
+y ejecuto el comando `terraform destroy -var-file="tfvars/<ENV>.tfvars"`.
+
+## Notas adicionales
+
+Tanto en el apply como en el destroy, se puede utilizar el parámetro `-auto-approve` para aceptar el plan de despliegue.
