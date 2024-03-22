@@ -23,7 +23,7 @@ Brindar una documentación completa y accesible de las prácticas desarrolladas 
 
 Utilizar la nomenclatura estándar del proyecto para nombrar carpetas y archivos.
 Emplear la carpeta "soluciones" de cada taller para almacenar las prácticas.
-El nombre de cada carpeta dentro de "soluciones" debe seguir el formato "Nombre-Apellido1-Apellido2", separando nombres y apellidos por guiones medios.
+El nombre de cada carpeta dentro de "soluciones" debe seguir el formato "Nickname".
 Se proporcionará a todos los participantes una plantilla PPT para garantizar la uniformidad en las presentaciones.
 
 ## Consideraciones:
