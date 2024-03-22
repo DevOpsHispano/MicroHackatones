@@ -35,15 +35,15 @@ La documentación debe ser clara, concisa y contener información relevante para
 
 soluciones/ \
 ├── Nickname/ \
-│   ├── documentacion.md
-│   ├── README.md
-│   └── scripts/
-│       └── script.sh
-├── Margarito24/
-│   ├── documentacion.md
-│   ├── README.md
-│   └── ...
-└── ...
+│   ├── documentacion.md \
+│   ├── README.md \
+│   └── scripts/ \
+│       └── script.sh \
+├── Margarito24/ \
+│   ├── documentacion.md \
+│   ├── README.md \
+│   └── ... \
+└── ... \
 
 ## Recursos:
 
