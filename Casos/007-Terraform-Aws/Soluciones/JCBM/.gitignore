@@ -1,0 +1,85 @@
+# Ignora los archivos de configuración locales
+*.local
+
+# Ignora los archivos de configuración del sistema
+*.conf
+# excepto...
+!nginx.conf
+!dockerd-config.conf
+!limits.conf
+
+# Ignora los archivos de registro
+*.log
+
+# Ignora los directorios de node_modules
+node_modules/
+
+# Ignora los directorios de vendor
+vendor/
+
+# Ignora los archivos de entorno
+.env
+
+# Ignora los archivos de caché
+*.cache
+
+# Ignora los archivos de compilación
+*.class
+*.pyc
+*.o
+*.a
+*.so
+*.dll
+*.exe
+
+# Ignora los archivos de paquetes
+*.jar
+*.war
+*.ear
+
+# Ignora los archivos de base de datos
+*.db
+*.sql
+*.sqlite
+
+# Ignora los archivos de IDE y editor
+/.idea
+*.swp
+*.swo
+*.swn
+*.bak
+*.orig
+*.old
+*.suo
+*.user
+*.userosscache
+*.sublime-workspace
+*.sublime-project
+.vscode/
+*.xcodeproj
+
+# Ignora los archivos de git
+config.json
+setup.sh
+minikube.sh
+kubeconfig
+
+# Archivos de estado de Terraform
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+*.tfplan
+.terraform.lock.hcl
+
+# Archivos de configuración de Terraform
+terraform.tfvars
+*.auto.tfvars
+
+# Directorio oculto de configuración de Terraform
+.terraform/
+
+# Ignorar todos los archivos .tfvars
+*.tfvars
+
+# Excepto sample.tfvars
+!sample.tfvars
