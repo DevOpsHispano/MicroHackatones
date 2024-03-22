@@ -38,7 +38,7 @@ soluciones/ \
 │   ├── documentacion.md \
 │   ├── README.md \
 │   └── scripts/ \
-│       └── script.sh \
+│       └────── script.sh \
 ├── Margarito24/ \
 │   ├── documentacion.md \
 │   ├── README.md \
