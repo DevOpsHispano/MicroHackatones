@@ -33,8 +33,8 @@ La documentación debe ser clara, concisa y contener información relevante para
 
 ### Ejemplo de estructura de carpeta:
 
-soluciones/
-├── Nickname/
+soluciones/ \
+├── Nickname/ \
 │   ├── documentacion.md
 │   ├── README.md
 │   └── scripts/
