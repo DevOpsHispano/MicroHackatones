@@ -18,7 +18,7 @@ Además, se podrán publicar los resultados de diferentes usuarios mediante un P
     2. Creación del caso:
         - Accede a tu fork del repositorio en GitHub.
         - Navega a la carpeta correspondiente al taller que deseas realizar (consulta el archivo Readme.md en la carpeta soluciones para obtener más información).
-        - Crea una nueva carpeta para tu caso de estudio (Usa tu nombre y apellidos).
+        - Crea una nueva carpeta para tu caso de estudio (Usa tu nickname).
         - Dentro de la carpeta, crea los archivos necesarios para tu solución (código fuente, documentación, etc.).
 
     3. Envío de cambios a GitHub:

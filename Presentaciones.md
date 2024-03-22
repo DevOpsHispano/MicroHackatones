@@ -34,12 +34,12 @@ La documentación debe ser clara, concisa y contener información relevante para
 ### Ejemplo de estructura de carpeta:
 
 soluciones/
-├── Nombre-Apellido1-Apellido2/
+├── Nickname/
 │   ├── documentacion.md
 │   ├── README.md
 │   └── scripts/
 │       └── script.sh
-├── Antonio-Pérez-García/
+├── Margarito24/
 │   ├── documentacion.md
 │   ├── README.md
 │   └── ...
