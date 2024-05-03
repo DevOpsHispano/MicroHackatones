@@ -2,17 +2,48 @@ name: Build and Deploy Microservices
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  Explore-GitHib-Actions:
-    runs-on: ubuntu-lastest
+  listfiles:
+    runs-on: ubuntu-latest
+    outputs: 
+      changedfiles: ${{ steps.listchangedfiles.outputs.changedfiles }}
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: 'Micros/'
+
+      - name: List all changed files
+        id: listchangedfiles
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}." 
+          ARRAY=()
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+            ARRAY+=($file)
+          done
+          echo "DEBUG: All changed files: $ARRAY"
+          echo "${ARRAY[@]}"
+          matrix=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${ARRAY[@]}")
+          echo "DEBUG: Json Matrix: $matrix"
+          echo "changedfiles=$(echo ${matrix})" >> $GITHUB_OUTPUT
+         
+  microservices:
+    needs: listfiles
+    if: ${{ needs.listfiles.outputs.changedfiles != '[]' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        changedfiles: ${{ fromJson(needs.listfiles.outputs.changedfiles) }}
+      max-parallel: 3
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: execution
+        run: |
+          sh ${{ matrix.changedfiles }}
+ 
+    
