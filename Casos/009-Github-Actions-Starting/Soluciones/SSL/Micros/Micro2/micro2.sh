@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Hello, I am microservice 2"
 
 sleep 10
