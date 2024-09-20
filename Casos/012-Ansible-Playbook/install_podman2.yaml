@@ -1,0 +1,50 @@
+---
+- name: Configurar repositorio y instalar Podman
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Eliminar entradas duplicadas del repositorio
+      lineinfile:
+        path: "{{ item }}"
+        regexp: '^deb .+devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/'
+        state: absent
+      with_items:
+        - /etc/apt/sources.list
+        - /etc/apt/sources.list.d/hashicorp.list
+
+    - name: Añadir la clave GPG para el repositorio de Podman
+      apt_key:
+        url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/Release.key
+        state: present
+
+    - name: Añadir el repositorio de Podman
+      apt_repository:
+        repo: 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/ /'
+        state: present
+
+    - name: Actualizar la caché de apt
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Verificar la disponibilidad de Podman
+      command: apt-cache search podman
+      register: podman_search
+      changed_when: False
+
+    - name: Instalar Podman
+      apt:
+        name: podman
+        state: present
+      when: "'podman' in podman_search.stdout"
+
+    - name: Mostrar la versión de Podman instalada
+      command: podman --version
+      register: podman_version
+      when: "'podman' in podman_search.stdout"
+
+    - name: Informar la versión de Podman instalada
+      debug:
+        msg: "Podman instalado: {{ podman_version.stdout }}"
+      when: "'podman' in podman_search.stdout"

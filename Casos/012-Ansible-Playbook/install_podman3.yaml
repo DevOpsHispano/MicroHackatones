@@ -1,0 +1,63 @@
+---
+- name: Configurar repositorio y instalar Podman con verbosidad
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Eliminar entradas duplicadas del repositorio
+      lineinfile:
+        path: "{{ item }}"
+        regexp: '^deb .+devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/'
+        state: absent
+      with_items:
+        - /etc/apt/sources.list
+        - /etc/apt/sources.list.d/hashicorp.list
+
+    - name: Añadir la clave GPG para el repositorio de Podman
+      apt_key:
+        url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/Release.key
+        state: present
+
+    - name: Añadir el repositorio de Podman
+      apt_repository:
+        repo: 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/ /'
+        state: present
+
+    - name: Actualizar la caché de apt con verbosidad
+      command: apt-get update -o Debug::pkgProblemResolver=yes -o Debug::Acquire::http=yes
+      register: update_result
+      ignore_errors: yes
+
+    - name: Mostrar resultado de la actualización del caché de apt
+      debug:
+        var: update_result.stdout_lines
+
+    - name: Verificar la disponibilidad del paquete Podman
+      command: apt-cache policy podman
+      register: podman_policy
+
+    - name: Mostrar información del paquete Podman
+      debug:
+        msg: "{{ podman_policy.stdout }}"
+
+    - name: Instalar Podman con verbosidad
+      command: apt-get install -y podman -o Debug::pkgProblemResolver=yes -o Debug::Acquire::http=yes
+      register: podman_install
+      when: "'Candidate' in podman_policy.stdout"
+      ignore_errors: yes
+
+    - name: Mostrar resultado de la instalación de Podman
+      debug:
+        var: podman_install.stdout_lines
+      when: "'Candidate' in podman_policy.stdout"
+
+    - name: Verificar la instalación de Podman
+      command: podman --version
+      register: podman_version
+      when: "'Candidate' in podman_policy.stdout"
+      ignore_errors: yes
+
+    - name: Mostrar la versión de Podman instalada
+      debug:
+        msg: "Podman instalado: {{ podman_version.stdout }}"
+      when: "'Candidate' in podman_policy.stdout"

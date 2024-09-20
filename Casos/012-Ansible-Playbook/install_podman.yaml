@@ -1,0 +1,46 @@
+---
+- name: Instalar Podman en Ubuntu
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Remove duplicate repository entries
+      lineinfile:
+        path: "{{ item }}"
+        regexp: '^deb .+devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/'
+        state: absent
+      with_items:
+        - /etc/apt/sources.list
+        - /etc/apt/sources.list.d/hashicorp.list
+      become: yes
+
+    - name: Add the GPG key for Podman repository
+      apt_key:
+        url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/Release.key
+        state: present
+      become: yes
+
+    - name: Add the Podman repository
+      apt_repository:
+        repo: 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/ /'
+        state: present
+      become: yes
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      become: yes
+
+    - name: Instalar Podman
+      apt:
+        name: podman
+        state: present
+
+    - name: Verificar la instalación de Podman
+      command: podman --version
+      register: podman_version
+
+    - name: Mostrar la versión de Podman instalada
+      debug:
+        msg: "Podman instalado: {{ podman_version.stdout }}"

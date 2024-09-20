@@ -1,0 +1,13 @@
+---
+- name: Creeeate a directory using two methods
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure the directory exists
+      file:
+        path: /home/simon/taller-12/test1
+        state: directory
+        mode: '0755'
+    
+    - name: Ensure the directory exists using shell
+      shell: mkdir /home/simon/taller-12/test2

@@ -1,0 +1,27 @@
+---
+- name: Build and run a Jenkins container
+  hosts: all
+  become: yes
+  tasks:
+    - name: Configurar registries.conf para incluir Docker Hub
+      blockinfile:
+        path: /etc/containers/registries.conf
+        block: |
+          [registries.search]
+          registries = ['docker.io']
+ 
+    - name: Construir la imagen de Jenkins con Podman
+      command: podman build -t jenkins_image .
+      register: podman_build
+
+    - name: Mostrar resultado de la construcción de la imagen de Jenkins
+      debug:
+        var: podman_build.stdout_lines
+
+    - name: Ejecutar el contenedor de Jenkins con Podman
+      command: podman run -d --name jenkins_container jenkins_image
+      register: podman_run
+
+    - name: Mostrar resultado de la ejecución del contenedor de Jenkins
+      debug:
+        var: podman_run.stdout_lines
