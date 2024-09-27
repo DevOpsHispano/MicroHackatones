@@ -3,8 +3,8 @@ Si no tienes Ansible y Podman instalados, lo primero será instalarlos en tu má
 
 ## Para instalar Ansible:
 
-"`sudo apt update`"
-"`sudo apt install ansible -y`"
+"`sudo apt update
+sudo apt install ansible -y`"
 
 O si usas Red Hat/CentOS:
 
