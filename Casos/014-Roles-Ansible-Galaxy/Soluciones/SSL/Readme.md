@@ -42,6 +42,7 @@ ansible-galaxy init deploy_jenkins
 
 Esto creará una estructura de carpetas estándar en los directorios install_podman y deploy_jenkins:
 
+```plaintext
 install_podman/
 ├── defaults/
 ├── files/
@@ -51,6 +52,7 @@ install_podman/
 ├── templates/
 ├── tests/
 └── vars/
+```
 
 # Crear el rol install_podman
 El objetivo de este rol es instalar Podman en tu máquina local.
@@ -114,9 +116,100 @@ Este playbook ejecutará los dos roles en tu máquina local.
 # Ejecución del Playbook
 Para ejecutar el playbook y desplegar Jenkins en Podman, ejecuta el siguiente comando:
 
-"`ansible-playbook -i hosts.ini site.yml`"
+```bash 
+ansible-playbook -i hosts.ini site.yml
+```
 
 # Explicación de Conceptos
  - Roles: Los roles en Ansible son una forma de organizar el código en módulos reutilizables. Cada rol tiene una estructura de carpetas estándar que permite aislar la lógica de cada componente (por ejemplo, instalación de Podman o Jenkins).
  - Playbook: Un playbook es un archivo YAML que contiene un conjunto de tareas o roles a ejecutar.
  - Ansible Galaxy: Es una plataforma para compartir roles predefinidos que puedes reutilizar en tus proyectos.
+
+ # Pasos para la alternativa con Docker:
+
+## Instalar Docker en tu máquina local:
+
+Si no tienes Docker instalado, sigue estos pasos para instalarlo:
+
+ - Para Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+ - Para CentOS/RHEL:
+
+```bash
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum install docker-ce docker-ce-cli containerd.io -y
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+También asegúrate de que tu usuario esté en el grupo docker para ejecutar comandos sin sudo:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+## Modificar el rol install_podman para que use Docker:
+
+En lugar de usar Podman, cambiamos el rol install_podman por un rol para instalar Docker. Este nuevo rol se puede llamar install_docker. Crea o edita el rol con el siguiente contenido en tasks/main.yml:
+
+```bash
+---
+- name: Instalar Docker
+  package:
+    name: docker.io
+    state: present
+```
+
+Modificar el rol deploy_jenkins para usar Docker:
+
+El archivo deploy_jenkins/tasks/main.yml cambiará para utilizar el módulo docker_container, que viene con Ansible de forma nativa:
+
+```bash
+---
+- name: Descargar imagen de Jenkins
+  docker_image:
+    name: jenkins/jenkins
+    tag: lts
+    state: present
+
+- name: Crear y ejecutar el contenedor de Jenkins
+  docker_container:
+    name: jenkins
+    image: jenkins/jenkins:latest
+    state: started
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+```
+
+Este código descargará la imagen de Jenkins y luego lanzará el contenedor de Jenkins, mapeando los puertos 8080 y 50000.
+
+## Modificar el Playbook (site.yml):
+
+Asegúrate de que el playbook (site.yml) esté llamando a los roles correctos (install_docker y deploy_jenkins):
+
+```bash
+---
+- hosts: local
+  become: yes
+
+  roles:
+    - install_docker
+    - deploy_jenkins
+```
+
+## Ejecutar el Playbook:
+
+Ahora puedes ejecutar el playbook de la siguiente manera:
+
+```bash
+ansible-playbook -i hosts.ini site.yml
+```
