@@ -1,0 +1,32 @@
+---
+# tasks file for deploy_jenkins
+
+# - name: Descargar imagen de Jenkins
+#   podman_image:
+#     name: jenkins/jenkins
+#     tag: lts
+#     state: present
+
+# - name: Crear y ejecutar el contenedor de Jenkins
+#   podman_container:
+#     name: jenkins
+#     image: jenkins/jenkins:latest
+#     state: started
+#     ports:
+#       - "8080:8080"
+#       - "50000:50000"
+- name: Descargar imagen de Jenkins
+  docker_image:
+    name: jenkins/jenkins
+    tag: lts
+    source: pull
+    state: present
+
+- name: Crear y ejecutar el contenedor de Jenkins
+  docker_container:
+    name: jenkins
+    image: jenkins/jenkins:latest
+    state: started
+    ports:
+      - "8080:8080"
+      - "50000:50000"

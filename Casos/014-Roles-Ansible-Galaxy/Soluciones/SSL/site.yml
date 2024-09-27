@@ -1,0 +1,10 @@
+---
+- hosts: local
+  become: yes
+
+  # collections:
+  #   - containers.podman
+
+  roles:
+    - install_docker
+    - deploy_jenkins

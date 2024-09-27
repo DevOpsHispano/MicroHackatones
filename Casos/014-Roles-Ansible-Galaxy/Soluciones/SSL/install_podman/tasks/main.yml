@@ -1,0 +1,6 @@
+---
+# tasks file for install_podman
+- name: Instalar Podman
+  package:
+    name: podman
+    state: present

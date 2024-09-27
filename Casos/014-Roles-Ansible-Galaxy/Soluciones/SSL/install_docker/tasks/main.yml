@@ -1,0 +1,6 @@
+---
+# tasks file for install_docker
+- name: Instalar Docker
+  package:
+    name: docker.io
+    state: present
