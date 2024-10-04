@@ -12,5 +12,5 @@ Dentro del pipeline tendrá que haber tantos steps como tu consideres necesarios
 Al menos uno de esos steps deberá ser el test de la aplicación, el ultimo step, que deberá ejecutar de forma paralela los 3 tests utilizando una matriz.
  
 ## Tips
-https://docs.github.com/en/actions
-https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow
+ - https://docs.github.com/en/actions
+ - https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow
