@@ -14,12 +14,6 @@ O si usas Red Hat/CentOS:
 sudo yum install ansible -y
 ```
 
-## Para instalar Podman:
-
-```bash 
-sudo apt install podman -y
-```
-
 # Creación del archivo hosts.ini
 Este archivo es necesario para definir el inventario, es decir, dónde se va a ejecutar el playbook. Dado que en este caso se trata de tu máquina local, lo definirás de la siguiente manera:
 
@@ -126,35 +120,6 @@ ansible-playbook -i hosts.ini site.yml
  - Ansible Galaxy: Es una plataforma para compartir roles predefinidos que puedes reutilizar en tus proyectos.
 
  # Pasos para la alternativa con Docker:
-
-## Instalar Docker en tu máquina local:
-
-Si no tienes Docker instalado, sigue estos pasos para instalarlo:
-
- - Para Ubuntu:
-
-```bash
-sudo apt update
-sudo apt install docker.io -y
-sudo systemctl start docker
-sudo systemctl enable docker
-```
-
- - Para CentOS/RHEL:
-
-```bash
-sudo yum install -y yum-utils
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum install docker-ce docker-ce-cli containerd.io -y
-sudo systemctl start docker
-sudo systemctl enable docker
-```
-
-También asegúrate de que tu usuario esté en el grupo docker para ejecutar comandos sin sudo:
-
-```bash
-sudo usermod -aG docker $USER
-```
 
 ## Modificar el rol install_podman para que use Docker:
 
