@@ -1,0 +1,15 @@
+name: 'Tests'
+description: 'Ejecuta los tests de la aplicación con los parámetros proporcionados'
+inputs:
+  param1:
+    description: 'Primer parámetro de los tests'
+    required: true
+  param2:
+    description: 'Segundo parámetro de los tests'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.param1 }}
+    - ${{ inputs.param2 }}

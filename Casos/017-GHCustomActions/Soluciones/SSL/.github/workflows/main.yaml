@@ -1,0 +1,34 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 0: Clonar el código del repositorio
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Paso 1: InfraConfig (Configuración de infraestructura)
+      - name: Configurar infraestructura
+        uses: ./.github/actions/infra-config
+
+      # Paso 2: Build (Construcción de la aplicación)
+      - name: Build
+        run: echo "Building"
+
+      # Paso 3: Deploy (Despliegue de la aplicación)
+      - name: Deploy
+        run: echo "Deploying"
+
+      # Paso 4: Tests (Ejecutar tests)
+      - name: Ejecutar tests
+        uses: ./.github/actions/tests
+        with:
+          param1: 'Test1'
+          param2: 'Test2'

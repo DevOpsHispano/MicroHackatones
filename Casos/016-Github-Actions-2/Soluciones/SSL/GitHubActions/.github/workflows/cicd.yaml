@@ -1,0 +1,14 @@
+# app-repo/.github/workflows/ci.yml
+name: CI
+
+on:
+  workflow_dispatch:
+  
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    uses: serrano1004/GitHubActionTemplates/.github/workflows/test-workflow.yml@main

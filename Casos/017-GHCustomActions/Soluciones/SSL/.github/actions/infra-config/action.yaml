@@ -1,0 +1,5 @@
+name: 'InfraConfig'
+description: 'Configura la infraestructura necesaria para la aplicación'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

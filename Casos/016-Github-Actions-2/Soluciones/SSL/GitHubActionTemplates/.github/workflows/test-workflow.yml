@@ -1,0 +1,56 @@
+# centralized-workflows/.github/workflows/test-workflow.yml
+name: Test Workflow
+
+on:
+  workflow_call:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Sonar
+        run: |
+          echo "Static code analisys"
+        
+      - name: Build & Unit Tests
+        run: |
+          echo "Building and testing"
+      
+      - name: Push the artifact 
+        run: |
+          echo "Pushing the artifact"
+      
+      - name: Deploy
+        run: |
+          echo "Deploying"
+      
+      - name: Integration tests
+        run: |
+          echo "Testing"
+  test:
+    runs-on: ubuntu-latest
+    needs: run-tests
+    strategy:
+      matrix:
+        test-file: [test1.sh, test2.sh, test3.sh]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Make scripts executable
+      run: chmod +x ./tests/*.sh
+    
+    - name: Run test
+      run: ./tests/${{ matrix.test-file }}
+
+  rollback:
+    runs-on: ubuntu-latest
+    needs: test
+    if: ${{failure()}}
+    steps:
+    - name: Rollback
+      run: |
+        echo "Tests failed. Returning to previous versions"
