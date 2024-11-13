@@ -1,0 +1,17 @@
+name: workflow microhackaton 18
+on: 
+  workflow_dispatch: 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: InfraConfig
+      uses: ./ 
+    - name: Build
+      run: echo "Building"
+    - name: Deploy
+      run: echo "Deploying"
+    - name: Test
+      run: echo "Test"
