@@ -12,13 +12,13 @@ Se propone modificar el tipo de custom action de Composite a Docker para que as�
 ## Implementación:
 1. Crear un repositorio en GitHub para almacenar el código fuente de la aplicación de TuEmpresa (puedes reutilizar el de talleres anteriores).
 2. Crear una custom action de tipo Docker:
-  - InfraConfig: Ejecuta un echo “Ejecutando tests”
+   - InfraConfig: Ejecuta un echo “Ejecutando tests”
 3. Crea un Dockerfile que herede de la imagen de alpine donde se ejecutará la custom Action (FROM alpine:latest).
 4. Crear un workflow en el repositorio de la aplicación con los siguientes pasos:
-  - InfraConfig(la action anteriormente desarrollada).
-  - Build (un echo building).
-  - Deploy (un echo Deploying).
-  - Test (un echo Test).
+   - InfraConfig(la action anteriormente desarrollada).
+   - Build (un echo building).
+   - Deploy (un echo Deploying).
+   - Test (un echo Test).
  
 ## Tips:
 https://docs.github.com/en/actions/sharing-automations/creating-actions/about-custom-actions
