@@ -1,0 +1,23 @@
+name: microHackaton19
+on: 
+  workflow_dispatch:
+    inputs:
+      entornos:
+        description: "Seleccione un entorno"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - test
+          - pre
+          - pro
+jobs:
+  microhackaton19:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.entornos }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Despliegue entorno
+      run: echo "Desplegando en el entorno ${{ github.event.inputs.entornos }} "
