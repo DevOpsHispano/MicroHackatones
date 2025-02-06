@@ -1,0 +1,31 @@
+groups:
+- name: MicroHackaton
+  rules:
+  
+  - alert: PrometheusTooManyRestarts
+    expr: changes(process_start_time_seconds{job=~"prometheus|pushgateway|alertmanager"}[15m]) > 2
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Prometheus too many restarts (instance {{ $labels.instance }})"
+      description: "Prometheus has restarted more than twice in the last 15 minutes. It might be crashlooping.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  - alert: HighCPUUsage
+    expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 8
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High CPU usage detected"
+      description: "CPU usage is above 80% on {{ $labels.instance }}"
+
+  - alert: InstanceDown
+    expr: up == 0
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance [{{ $labels.instance }}] down"
+      description: "[{{ $labels.instance }}] of job [{{ $labels.job }}] has been down for more than 1 minute."
+    
