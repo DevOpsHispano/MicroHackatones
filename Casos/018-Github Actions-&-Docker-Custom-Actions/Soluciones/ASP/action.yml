@@ -1,0 +1,6 @@
+name: "Custom action"
+description: "Custom action en Alpine usando un Dockerfile"
+# Runs using Docker
+runs:
+  using: "docker"
+  image: "Dockerfile" 
