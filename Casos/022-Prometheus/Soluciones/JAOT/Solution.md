@@ -9,8 +9,8 @@ docker pull prom/node-exporter
 
 ## Arrancamos los contenedores
 ```bash
-docker run --name prometheus -d -p 9090:9090 prom/prometheus
-docker run --name node_exporter -d -p 9100:9100 prom/node-exporter
+docker run -d --name=prometheus -p 9090:9090 --network=host prom/prometheus
+docker run -d --name=node_exporter -p 9100:9100 --network=host prom/node-exporter
 ```
 
 ## Añadimos la configuración
