@@ -1,0 +1,28 @@
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 1m
+  repeat_interval: 1m
+  receiver: 'web.hook'
+  routes:
+    - receiver: 'slack-notifications'
+
+receivers:
+  - name: 'web.hook'
+    webhook_configs:
+      - url: 'http://127.0.0.1:5001/'
+  - name: 'slack-notifications'
+    slack_configs:
+      - channel: '#taller-prometheus'
+        send_resolved: true
+        api_url: 'https://hooks.slack.com/services/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'
+        icon_url: 'https://avatars3.githubusercontent.com/u/3380462'
+        title: "{{ range .Alerts }}[{{ .Status | toUpper }}] {{ .Annotations.summary }} - {{ .Labels.severity | toUpper }}\n{{ end }}"
+        text: "{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}"  
+        
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
