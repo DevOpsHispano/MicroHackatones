@@ -1,0 +1,131 @@
+name: "CI and CD-Dev"
+on:  
+  push:
+    branches:
+       - main
+jobs:  
+  build:    
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Checkout código        
+        uses: actions/checkout@v4
+
+      - name: Install Hakcaton CLi       
+        uses: ./.github/actions/hackatoncli
+
+      - name: Install Hakcaton CLi        
+        uses: ./.github/actions/configurenetwork
+
+      - name: Static code analisis        
+        uses: ./.github/actions/sonnarqube_analisis
+
+      - name: Build Frontend
+        run: |
+          echo "Construyendo aplicación..."
+          /*
+          * 
+          * 
+          Ramdom but usefull code
+          *
+          *
+          */
+      
+      - name: Unit tests
+        run: |
+          echo "Testeando aplicación..."
+          /*
+          * 
+          * 
+          Ramdom but usefull code
+          *
+          *
+          */
+
+      - name: More tests
+        run: |
+          echo "Testeando aplicación mas..."
+          
+          /*
+          * 
+          * 
+          Ramdom but usefull code
+          *
+          *
+          */ 
+
+      - name: Upload Artifact
+        need: Build App && Test App && Deploy App Dev == success
+        run: |
+          /*
+          * 
+          * 
+          Ramdom but usefull code
+          *
+          *
+          */
+
+  deploy-dev:
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Deploy to Dev Environment
+        run: |
+          /*
+          * 
+          * 
+          Ramdom but usefull code
+          *
+          *
+          */
+          
+
+      - name: Test Autonomous
+        run: |
+          /*
+          * 
+          * 
+          Ramdom but usefull code
+          *
+          *
+          */
+      
+      - name: Promote artifact
+        run: |
+          /*
+          * 
+          * 
+          Ramdom but usefull code
+          *
+          *
+          */
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    authorization: True
+    Required: ReleaseManagerTeam    
+    steps:
+      - name: Deploy to Prod Environment
+        run: |
+          /*
+          * 
+          * 
+          Ramdom but usefull code
+          *
+          *
+          */
+
+      - name: Promote artifact
+        run: |
+          /*
+          * 
+          * 
+          Ramdom but usefull code
+          *
+          *
+          */
+
+
+          
+
+                
+
+    
