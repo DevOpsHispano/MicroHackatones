@@ -1,0 +1,19 @@
+name: "Workflow de este repo"
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy-env:
+        description: 'Entorno de despliegue (DEV o PRO)'
+        required: true
+        default: 'DEV'
+        type: choice
+        options:
+          - DEV
+          - PRO
+
+jobs:
+  call-general-workflow:
+    uses: orgCleanCode2/infraestructura/.github/workflows/workflow.yml@main
+    with:
+      deploy-env: ${{ inputs.deploy-env }}

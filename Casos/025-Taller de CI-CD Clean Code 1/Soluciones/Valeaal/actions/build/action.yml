@@ -1,0 +1,6 @@
+name: build
+runs:
+  using: composite
+  steps:
+    - run: echo "Contruyendo app"
+      shell: bash

@@ -1,0 +1,8 @@
+name: "sonnarqube_analisis"
+runs:
+  using: "composite"
+  steps:
+  - name: sonnarqube_analisis
+    run: |
+      echo "Ejecuando sonnarqube"
+    shell: bash
