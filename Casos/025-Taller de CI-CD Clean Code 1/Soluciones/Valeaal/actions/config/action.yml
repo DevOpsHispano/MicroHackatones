@@ -1,0 +1,63 @@
+name: 'Config'
+description: 'Aplica configuraciones básicas para el servidor web'
+inputs:
+  web-dir:
+    description: 'Directorio raíz para el servidor web'
+    default: '/var/www/app'
+    required: false
+  packages:
+    description: 'Lista de paquetes a instalar (separados por espacio)'
+    default: 'nginx curl'
+    required: false
+  enable-firewall:
+    description: 'Habilitar el firewall (ufw) y permitir tráfico para Nginx'
+    default: 'true'
+    required: false
+  stop-apache:
+    description: 'Detener y deshabilitar Apache2'
+    default: 'true'
+    required: false
+  nginx-config-file:
+    description: 'Archivo de configuración de Nginx a modificar'
+    default: '/etc/nginx/sites-available/default'
+    required: false
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        echo "Aplicando configuraciones necesarias"
+
+        # Actualizar paquetes e instalar los especificados
+        sudo apt update -y
+        sudo apt install -y ${{ inputs.packages }}
+
+        # Configurar Nginx
+        sudo systemctl enable nginx
+        sudo systemctl start nginx
+
+        # Configurar el firewall (ufw) si está habilitado
+        if [ "${{ inputs.enable-firewall }}" = "true" ]; then
+          sudo ufw allow 'Nginx Full'
+          sudo ufw enable
+        fi
+
+        # Detener y deshabilitar Apache2 si está habilitado
+        if [ "${{ inputs.stop-apache }}" = "true" ]; then
+          sudo systemctl stop apache2
+          sudo systemctl disable apache2
+        fi
+
+        # Hacer copia de seguridad de la configuración de Nginx
+        sudo cp ${{ inputs.nginx-config-file }} ${{ inputs.nginx-config-file }}-backup
+
+        # Modificar el directorio raíz de Nginx (usar # como delimitador)
+        sudo sed -i "s#root /var/www/html;#root ${{ inputs.web-dir }};#" ${{ inputs.nginx-config-file }}
+
+        # Reiniciar Nginx
+        sudo systemctl restart nginx
+
+        # Ajustar permisos y propietario
+        # Si lo ejecutamos como tal no encuentra la carpeta
+        echo "chmod -R 755 ${{ inputs.web-dir }}"
+        echo "sudo chown -R www-data:www-data ${{ inputs.web-dir }}"
+      shell: bash

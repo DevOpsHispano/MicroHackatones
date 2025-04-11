@@ -1,0 +1,55 @@
+name: "Good Pipeline"
+on:  
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Permite ejecución manual
+    inputs:
+      deploy-env:
+        description: 'Entorno donde desplegar (DEV o PROD)'
+        required: true
+        default: 'DEV'
+        type: choice
+        options:
+            - DEV
+            - PROD
+
+jobs:  
+  build-and-deploy:    
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.deploy-env || 'DEV' }}
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: A Produccion
+        uses: ./.github/actions/install
+
+      - name: Declarar variables
+        run: echo "Usuario ${{ secrets.DB_USER_DEV }}, Contraseña ${{ secrets.DB_PASS_DEV }}, Key ${{ secrets.API_KEY_DEV }}"
+
+      - name: Configuracion
+        uses: ./.github/actions/config
+        with:
+          web-dir: '/var/www/myapp'
+          packages: 'nginx curl wget'
+          enable-firewall: 'false'
+          stop-apache: 'true'
+          nginx-config-file: '/etc/nginx/sites-available/default'
+
+      - name: Build
+        uses: ./.github/actions/build
+
+      - name: Tests
+        uses: ./.github/actions/tests
+        with:
+          version: 3
+
+      - name: Deploy
+        run: |
+            if [ "${{ inputs.deploy-env }}" = "PROD" ]; then
+              echo "Desplegando en PROD, Usuario ${{ secrets.DB_USER_PROD }}, Contraseña ${{ secrets.DB_PASS_PROD }}, Key ${{ secrets.API_KEY_PROD }}"
+            else
+              echo "Desplegando en ${{ inputs.deploy-env || 'DEV' }}"
+            fi
+        
