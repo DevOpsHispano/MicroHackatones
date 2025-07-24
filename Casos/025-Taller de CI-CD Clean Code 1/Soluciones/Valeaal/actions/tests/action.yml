@@ -1,0 +1,12 @@
+name: tests
+inputs:
+    version:
+      description: 'Version del test a ejecutar'
+      default: 2
+      required: true
+
+runs:
+  using: composite
+  steps:
+    - run: echo "Ejecutando tests ${{inputs.version}}"
+      shell: bash

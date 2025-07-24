@@ -1,0 +1,8 @@
+name: "Install hackaton cli"
+runs:
+  using: "composite"
+  steps:
+  - name: Install hackaton cli
+    run: |
+      echo "Ejecuando configuración de hackaton cli"
+    shell: bash

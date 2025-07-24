@@ -1,0 +1,12 @@
+name: install
+runs:
+  using: composite
+  steps:
+    - run: echo "Instalando los paquetes necesarios..." 
+      shell: bash
+
+      # No puedo ejecutar los comandos especificados porque si no da error
+
+      # No creo una caché porque presuponemos que estos paquetes son muy livianos:
+      # Las caches están mas pensadas para npm, pip...
+      # The cost (in terms of time) of caching and restoring a cache, vs reinstalling the dependency needs to be taken into account, https://stackoverflow.com/questions/59269850/caching-apt-packages-in-github-actions-workflow

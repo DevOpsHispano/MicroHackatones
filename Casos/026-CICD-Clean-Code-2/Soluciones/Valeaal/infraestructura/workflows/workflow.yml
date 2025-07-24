@@ -1,0 +1,57 @@
+name: "general-workflow"
+on:  
+  workflow_call:
+    inputs:
+      deploy-env:
+        description: Entorno sobre el que desplegar (DEV o PRO)
+        required: true
+        default: DEV
+        type: string
+
+jobs:  
+  build:    
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.deploy-env || 'DEV' }}
+    
+    steps:
+
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Install Hakcaton CLi        
+        uses: orgCleanCode2/infraestructura/.github/actions/hackatoncli@main
+
+      - name: Configure Hakcaton CLi        
+        uses: orgCleanCode2/infraestructura/.github/actions/configurenetwork@main
+
+      - name: Static code analisis        
+        uses: orgCleanCode2/infraestructura/.github/actions/sonnarqube_analisis@main
+
+      - name: Build App
+        uses: ./.github/actions/build
+      
+      - name: Test App  # Cambié el nombre para evitar duplicado
+        uses: ./.github/actions/test
+
+      - name: Check if dist exists
+        run: |
+          if [ ! -d "./dist" ]; then
+            echo "Error: ./dist directory not found. Build likely failed."
+            exit 1
+          fi
+        shell: bash
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: ./dist
+          
+      - name: Deploy
+        run: |
+          if [ "${{ inputs.deploy-env }}" = "PRO" ]; then
+            echo "Desplegando en PRODUCCIÓN, esperando autorización del equipo de DevOps"
+          else
+            echo "Desplegando en ${{ inputs.deploy-env || 'DEV' }}"
+          fi
+        shell: bash

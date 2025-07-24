@@ -1,0 +1,8 @@
+name: "Test"
+runs:
+  using: "composite"
+  steps:
+  - name: Test
+    run: |
+      echo "Test personalizado"
+    shell: bash
